@@ -23,7 +23,7 @@ def parser(post):
     chapo = root.find('chapo')
     if chapo is not None:
         chapo = chapo.text
-        content = chapo + content
+        chapo = html2text.html2text(chapo)
 
     # Convert the HTML content to Markdown
     converted_content = html2text.html2text(content)
