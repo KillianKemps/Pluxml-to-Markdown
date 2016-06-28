@@ -8,8 +8,14 @@ def convert(args):
     root = tree.getroot()
 
     title = root.find('title').text
-    chapo = root.find('chapo').text
     content = root.find('content').text
 
+    # Verify that there is a chapo
+    chapo = root.find('chapo')
+    if chapo is not None:
+        chapo = chapo.text
+        content = chapo + content
+
+
     print('Converted markdown :')
-    print(html2text.html2text(chapo + content))
+    print(html2text.html2text(content))
