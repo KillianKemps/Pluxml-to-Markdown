@@ -20,8 +20,10 @@ def controller(args):
             full_path = articles_folder_path + '/' + filename
 
             with open(full_path, 'r') as post:
+                # First parse the PluXml content
                 parsed_post = parser.parser(post)
 
+            # Then give the parsed_post to one of the converters
             if args.converter == 'grav':
                 converter.toGrav(parsed_post, folder_path)
             else:
