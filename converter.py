@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
+import shutil
+
+from utils import bcolors
 
 
-def toSimpleMarkdown(post):
+def toSimpleMarkdown(post, folder):
     """
     Convert to Markdown (without headers)
     """
@@ -20,7 +23,7 @@ def toSimpleMarkdown(post):
     target_file.close()
 
 
-def toGrav(post):
+def toGrav(post, folder):
     """
     Convert to Markdown + YAML Front Matter for Grav CMS
     """
@@ -52,3 +55,11 @@ def toGrav(post):
     target_file = open(post_folder_path + '/' + target_filename, 'w')
     target_file.write(header + post['chapo'] + post['content'])
     target_file.close()
+
+    for image in post['images']:
+        print('Copying image from: ', folder + '/images/' + os.path.basename(image))
+        image_path = folder + '/images/' + os.path.basename(image)
+        try:
+            shutil.copy2(image_path, post_folder_path)
+        except FileNotFoundError:
+            print(bcolors.FAIL + 'Error: Image {0} doesn\'t seem to exist and has not been copied'.format(image) + bcolors.ENDC)

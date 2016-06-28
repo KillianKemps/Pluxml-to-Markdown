@@ -7,13 +7,19 @@ import parser
 
 def controller(args):
     """
-    Loop over the folder to start parsing and conversion of each file
+    Loop over the data folder to start parsing and conversion of each file
     """
-    for filename in os.listdir(args.folder):
+    folder_path = os.path.abspath(args.folder)
+
+    # Get all posts from articles folder
+    articles_folder_path = folder_path + '/articles/'
+
+    for filename in os.listdir(articles_folder_path):
         # Check if its a XML file
         if os.path.splitext(filename)[-1] == '.xml':
-            full_path = os.path.abspath(args.folder) + '/' + filename
+            full_path = articles_folder_path + '/' + filename
+
             with open(full_path, 'r') as post:
                 parsed_post = parser.parser(post)
 
-            converter.toGrav(parsed_post)
+            converter.toGrav(parsed_post, folder_path)
