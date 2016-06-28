@@ -34,7 +34,7 @@ def toGrav(post, folder):
         header += '\n' + 'tag: ' + post['tags']
     if post['draft'] is True:
         header += '\n' + 'published: false '
-    header += '\n' + 'date: ' + str(post['date'])
+    header += '\n' + 'date: \'' + str(post['date'] +'\'')
     header += '\n' + '---' + '\n'
 
     print('Converted markdown :')

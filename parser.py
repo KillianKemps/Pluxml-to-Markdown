@@ -57,6 +57,7 @@ def parser(post):
     # Get the date from the file name
     date = post.name.split('.')[-3]
     formatted_date = datetime.strptime(date, "%Y%m%d%H%M")
+    formatted_date = formatted_date.strftime("%d-%m-%Y %H:%M")
 
     # Check if the post is a draft in its filename
     draft = re.search( 'draft', post.name)
