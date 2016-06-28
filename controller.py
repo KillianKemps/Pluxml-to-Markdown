@@ -6,6 +6,9 @@ import converter
 import parser
 
 def controller(args):
+    """
+    Loop over the folder to start parsing and conversion of each file
+    """
     for filename in os.listdir(args.folder):
         # Check if its a XML file
         if os.path.splitext(filename)[-1] == '.xml':
