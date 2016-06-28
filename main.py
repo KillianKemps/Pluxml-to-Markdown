@@ -1,8 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import argparse
 
-import html2text
+import converter
 
-print('First test converting HTML to MD:')
-print(html2text.html2text("<p><strong>Zed's</strong> dead baby, <em>Zed's</em> dead.</p>"))
+# Main parser
+parser = argparse.ArgumentParser(
+    description='Convert PluXML files to Markdown')
 
+parser.add_argument(
+    'filename',
+    type=open,
+    help='File to import')
+
+parser.set_defaults(
+    func=converter.convert)
+
+if __name__ == '__main__':
+    args = parser.parse_args()
+    args.func(args)  # call the default function
