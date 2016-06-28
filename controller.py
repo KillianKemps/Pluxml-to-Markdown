@@ -22,4 +22,7 @@ def controller(args):
             with open(full_path, 'r') as post:
                 parsed_post = parser.parser(post)
 
-            converter.toGrav(parsed_post, folder_path)
+            if args.converter == 'grav':
+                converter.toGrav(parsed_post, folder_path)
+            else:
+                converter.toSimpleMarkdown(parsed_post, folder_path)

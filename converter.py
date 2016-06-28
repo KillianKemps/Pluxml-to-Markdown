@@ -20,7 +20,7 @@ def toSimpleMarkdown(post, folder):
     target_filename = os.path.splitext(file_basename)[0] + '.md'
 
     target_file = open(folder_name + '/' + target_filename, 'w')
-    target_file.write(header + post['chapo'] + post['content'])
+    target_file.write(post['chapo'] + post['content'])
     target_file.close()
 
 
