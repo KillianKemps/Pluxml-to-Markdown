@@ -32,7 +32,6 @@ def toGrav(post, folder):
 
     # Escape double quotes from title
     if re.search('"', post['title']):
-        print(bcolors.WARNING + '*'*80 + bcolors.ENDC)
         post['title'] = '\'' + post['title'] + '\''
 
     header = '---'
@@ -43,6 +42,11 @@ def toGrav(post, folder):
         header += '\n' + 'published: false '
     header += '\n' + 'date: \'' + str(post['date'] +'\'')
     header += '\n' + '---' + '\n'
+
+    # Change all PluXML images sources by local one
+    if len(post['images']) is not 0:
+        src = re.compile('!\[\]\((data/images/)')
+        post['content'] = src.sub('![](', post['content'])
 
     print('Converted markdown :')
     print(header)
