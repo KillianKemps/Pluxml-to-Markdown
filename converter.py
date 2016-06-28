@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import shutil
+import re
 
 from utils import bcolors
 
@@ -28,6 +29,12 @@ def toGrav(post, folder):
     Convert to Markdown + YAML Front Matter for Grav CMS
     """
     # Write YAML header for Markdown file
+
+    # Escape double quotes from title
+    if re.search('"', post['title']):
+        print(bcolors.WARNING + '*'*80 + bcolors.ENDC)
+        post['title'] = '\'' + post['title'] + '\''
+
     header = '---'
     header += '\n' + 'title: ' + post['title']
     if post['tags'] is not None:

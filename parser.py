@@ -14,12 +14,13 @@ def parser(post):
     """
     Parse PluXML post in order to be converted afterwards
     """
+    print('\n' + '*'*80)
+
     tree = ET.parse(post)
     root = tree.getroot()
 
     title = root.find('title').text
 
-    print('\n' + '*'*80)
     print(bcolors.OKBLUE + 'Parsing {0} post'.format(title) + bcolors.ENDC)
 
     tags = root.find('tags').text
