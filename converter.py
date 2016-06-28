@@ -32,12 +32,13 @@ def toGrav(post, folder):
     header += '\n' + 'title: ' + post['title']
     if post['tags'] is not None:
         header += '\n' + 'tag: ' + post['tags']
+    if post['draft'] is True:
+        header += '\n' + 'published: false '
     header += '\n' + 'date: ' + str(post['date'])
     header += '\n' + '---' + '\n'
 
     print('Converted markdown :')
     print(header)
-    # print(post['content'])
 
     # Create output folder if it doesn't exist
     folder_name = 'converted_posts'

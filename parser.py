@@ -25,9 +25,10 @@ def parser(post):
     tags = root.find('tags').text
     content = root.find('content')
 
-    # Decalre array here in case content in None
+    # Declare array here in case content in None
     local_images_src = []
 
+    # Get content if there is one
     if content is not None:
         content = content.text
 
@@ -43,11 +44,7 @@ def parser(post):
         else:
             content = ''
 
-    # Get the date from the file name
-    date = post.name.split('.')[-3]
-    formatted_date = datetime.strptime(date, "%Y%m%d%H%M")
-
-    # Verify that there is a chapo
+    # Get chapo is there is one
     chapo = root.find('chapo')
     if chapo is not None:
         chapo = chapo.text
@@ -57,11 +54,23 @@ def parser(post):
         else:
             chapo = ''
 
+    # Get the date from the file name
+    date = post.name.split('.')[-3]
+    formatted_date = datetime.strptime(date, "%Y%m%d%H%M")
+
+    # Check if the post is a draft in its filename
+    draft = re.search( 'draft', post.name)
+    if draft is not None:
+        draft = True
+    else:
+        draft = False
+
     print(bcolors.OKBLUE + 'Parsing finished' + bcolors.ENDC)
 
     return {
         'filename': post.name,
         'title': title,
+        'draft': draft,
         'date': formatted_date,
         'tags': tags,
         'chapo': chapo,
