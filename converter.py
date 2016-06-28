@@ -48,6 +48,9 @@ def toGrav(post, folder):
         src = re.compile('!\[\]\((data/images/)')
         post['content'] = src.sub('![](', post['content'])
 
+    if post['chapo'] is not '':
+        post['chapo'] += '===\n\n'
+
     print('Converted markdown :')
     print(header)
 
@@ -64,6 +67,7 @@ def toGrav(post, folder):
 
     target_filename = 'item.md'
 
+    # Write converted file
     target_file = open(post_folder_path + '/' + target_filename, 'w')
     target_file.write(header + post['chapo'] + post['content'])
     target_file.close()
