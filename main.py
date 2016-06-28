@@ -9,9 +9,9 @@ parser = argparse.ArgumentParser(
     description='Convert PluXML files to Markdown')
 
 parser.add_argument(
-    'filename',
+    'post',
     type=open,
-    help='File to import')
+    help='Post to import')
 
 parser.set_defaults(
     func=converter.convert)
