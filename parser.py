@@ -23,7 +23,25 @@ def parser(post):
     print(bcolors.OKBLUE + 'Parsing {0} post'.format(title) + bcolors.ENDC)
 
     tags = root.find('tags').text
-    content = root.find('content').text
+    content = root.find('content')
+
+    # Decalre array here in case content in None
+    local_images_src = []
+
+    if content is not None:
+        content = content.text
+
+        if content is not None:
+            # Parse images
+            html = BeautifulSoup(content, 'html.parser')
+            local_images = html.find_all(src=re.compile('^data/images'))
+
+            local_images_src = [image.get('src') for image in local_images]
+
+            # Convert the HTML content to Markdown
+            content = html2text.html2text(content)
+        else:
+            content = ''
 
     # Get the date from the file name
     date = post.name.split('.')[-3]
@@ -33,16 +51,11 @@ def parser(post):
     chapo = root.find('chapo')
     if chapo is not None:
         chapo = chapo.text
-        chapo = html2text.html2text(chapo)
 
-    # Convert the HTML content to Markdown
-    converted_content = html2text.html2text(content)
-
-    # Parse images
-    html = BeautifulSoup(content, 'html.parser')
-    local_images = html.find_all(src=re.compile('^data/images'))
-
-    local_images_src = [image.get('src') for image in local_images]
+        if chapo is not None:
+            chapo = html2text.html2text(chapo)
+        else:
+            chapo = ''
 
     print(bcolors.OKBLUE + 'Parsing finished' + bcolors.ENDC)
 
@@ -52,5 +65,5 @@ def parser(post):
         'date': formatted_date,
         'tags': tags,
         'chapo': chapo,
-        'content': converted_content,
+        'content': content,
         'images': local_images_src}
