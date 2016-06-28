@@ -7,7 +7,7 @@ def toSimpleMarkdown(post):
     """
     Convert to Markdown (without headers)
     """
-    # Create target folder if it doesn't exist
+    # Create output folder if it doesn't exist
     folder_name = 'converted_posts'
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
@@ -36,14 +36,19 @@ def toGrav(post):
     print(header)
     # print(post['content'])
 
-    # Create target folder if it doesn't exist
+    # Create output folder if it doesn't exist
     folder_name = 'converted_posts'
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
 
-    file_basename = os.path.basename(post['filename'])
-    target_filename = os.path.splitext(file_basename)[0] + '.md'
+    # Create folder for post
+    post_folder = post['filename'].split('.')[-2]
+    post_folder_path = folder_name + '/' + post_folder
+    if not os.path.exists(post_folder_path):
+        os.makedirs(post_folder_path)
 
-    target_file = open(folder_name + '/' + target_filename, 'w')
+    target_filename = 'item.md'
+
+    target_file = open(post_folder_path + '/' + target_filename, 'w')
     target_file.write(header + post['chapo'] + post['content'])
     target_file.close()

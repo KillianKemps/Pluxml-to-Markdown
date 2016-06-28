@@ -15,4 +15,5 @@ def controller(args):
             full_path = os.path.abspath(args.folder) + '/' + filename
             with open(full_path, 'r') as post:
                 parsed_post = parser.parser(post)
-                converter.toGrav(parsed_post)
+
+            converter.toGrav(parsed_post)
