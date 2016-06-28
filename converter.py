@@ -5,8 +5,8 @@ from datetime import datetime, date, time
 import html2text
 import xml.etree.ElementTree as ET
 
-def convert(args):
-    tree = ET.parse(args.post)
+def convert(post):
+    tree = ET.parse(post)
     root = tree.getroot()
 
     title = root.find('title').text
@@ -14,7 +14,7 @@ def convert(args):
     content = root.find('content').text
 
     # Get the date from the file name
-    date = args.post.name.split('.')[-3]
+    date = post.name.split('.')[-3]
     formatted_date = datetime.strptime(date, "%Y%m%d%H%M")
 
     # Verify that there is a chapo
@@ -43,9 +43,9 @@ def convert(args):
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
 
-    file_basename = os.path.basename(args.post.name)
+    file_basename = os.path.basename(post.name)
     target_filename = os.path.splitext(file_basename)[0] + '.md'
 
-    target_file = open(folder_name + '/' +target_filename, 'w')
+    target_file = open(folder_name + '/' + target_filename, 'w')
     target_file.write(header + converted_content)
     target_file.close()

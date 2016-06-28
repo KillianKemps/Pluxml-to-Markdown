@@ -2,19 +2,18 @@
 # -*- coding: utf-8 -*-
 import argparse
 
-import converter
+import controller
 
 # Main parser
 parser = argparse.ArgumentParser(
     description='Convert PluXML files to Markdown')
 
 parser.add_argument(
-    'post',
-    type=open,
-    help='Post to import')
+    'folder',
+    help='Folder from where to import posts')
 
 parser.set_defaults(
-    func=converter.convert)
+    func=controller.controller)
 
 if __name__ == '__main__':
     args = parser.parse_args()
