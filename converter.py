@@ -46,8 +46,8 @@ def toGrav(post, folder):
     # Change all PluXML images sources by local one (images will be copied
     # afterwards)
     if len(post['images']) is not 0:
-        src = re.compile('!\[\]\((data/images/)')
-        post['content'] = src.sub('![](', post['content'])
+        src = re.compile('!\[(.*)\]\(data\/images\/')
+        post['content'] = src.sub(r'![\1](', post['content'])
 
     if post['chapo'] is not '':
         post['chapo'] += '===\n\n'
