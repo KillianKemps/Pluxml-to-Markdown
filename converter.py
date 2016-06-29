@@ -47,8 +47,6 @@ def toGrav(post, folder):
     # it is currently needed to fix them here
     # See: https://github.com/Alir3z4/html2text/issues/127
     def remove_newlines(match):
-        print('matched: ', match.group())
-        print('Gonna return :',"".join(match.group().strip().split('\n')))
         return "".join(match.group().strip().split('\n'))
 
     links_pattern = re.compile(r'\[([\w\s*:/\-\.]*)\]\(([^()]+)\)')
