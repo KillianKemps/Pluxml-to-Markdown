@@ -43,12 +43,24 @@ def toGrav(post, folder):
     header += '\n' + 'date: \'' + str(post['date'] +'\'')
     header += '\n' + '---' + '\n'
 
+    # As html2text library currently inserts newlines when links are too long,
+    # it is currently needed to fix them here
+    # See: https://github.com/Alir3z4/html2text/issues/127
+    def remove_newlines(match):
+        print('matched: ', match.group())
+        print('Gonna return :',"".join(match.group().strip().split('\n')))
+        return "".join(match.group().strip().split('\n'))
+
+    links_pattern = re.compile(r'\[([\w\s*:/\-\.]*)\]\(([^()]+)\)')
+    post['content'] = links_pattern.sub(remove_newlines, post['content'])
+
     # Change all PluXML images sources by local one (images will be copied
     # afterwards)
     if len(post['images']) is not 0:
-        src = re.compile('!\[(.*)\]\(data\/images\/')
+        src = re.compile(r'!\[([\w\s*:/\-\.]*)\]\(data\/images\/')
         post['content'] = src.sub(r'![\1](', post['content'])
 
+    # Create summary if there is a chapo
     if post['chapo'] is not '':
         post['chapo'] += '===\n\n'
 
